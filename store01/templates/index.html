@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Scraping Project</title>
+{% endblock %}
+
+{% block body %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="text-center">Scraping Project</h2>
+        <p class="text-center">Scraping data of Fruit & Vegetables from 
+            <a href="https://www.luluhypermarket.com/">Lulu Hypermarket</a>
+        </p>
+    </div>
+</div>
+<div class="container mt-2">
+    <div class="row">
+        {% for item in data %}
+        <div class="col-sm-3 mt-4">
+            <div class="card">
+                <img src="{{ item.image }}" class="card-img-top">
+                <div class="card-body">
+                    <div>
+                        <strong>{{ item.title }}</strong><br>
+                        <strong>USD</strong> {{ item.price }}<br>
+                        <strong>Size:</strong> {{ item.weight }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+        <div class="text-center mt-4 mb-4">
+            {% for page in total_pages %}
+                {% if request.args.get('page') == str(page + 1) or request.args.get('page') == None and page == 0 %}
+                    <a href="{{ str(request.url).split('?')[0] + '?page=' + str(page + 1) }}" class="btn btn-primary mt-2 mb-2">{{ page + 1 }}</a>
+                {% else %}
+                    <a href="{{ str(request.url).split('?')[0] + '?page=' + str(page + 1) }}" class="btn btn-outline-primary mt-2 mb-2">{{ page + 1 }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    <div class="card">
+        <div class="card-footer mt-4">
+            <p class="text-center">
+                Created by fajarslvn
+                <br>
+                <strong><a href="mailto:jarphish@gmail.com">jarphish@gmail.com</a></strong>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
